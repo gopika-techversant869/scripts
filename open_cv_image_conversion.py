@@ -1,6 +1,7 @@
 import sys
 import cv2
 
+
 # Define size presets
 SIZES = {
     "large": (1024, 1024),
@@ -9,26 +10,25 @@ SIZES = {
 }
 
 def resize_image(image_path):
-    """Resizes an image into multiple sizes and saves them using OpenCV."""
     
+    """Resizes an image into multiple sizes and saves them using OpenCV."""
+
     try:
-        # Read image using OpenCV
+     
         img = cv2.imread(image_path)
+        print(img.shape)
 
         if img is None:
             raise ValueError("Failed to load image. Please check the file path.")
 
-        # Get filename without extension
         filename = image_path.rsplit(".", 1)[0]
+        print("file name:",filename)
 
         for size_name, size in SIZES.items():
-            # Resize using high-quality interpolation
             resized_img = cv2.resize(img, size, interpolation=cv2.INTER_CUBIC)
-
-            # Save image with optimized compression
+            print(resized_img.shape)
             output_path = f"{filename}_{size_name}.jpg"
-            cv2.imwrite(output_path, resized_img, [cv2.IMWRITE_JPEG_QUALITY, 90])
-
+            cv2.imwrite(output_path, resized_img, [cv2.IMWRITE_JPEG_QUALITY, 100])
             print(f"Image saved: {output_path}")
 
     except Exception as e:
@@ -37,6 +37,7 @@ def resize_image(image_path):
 # Command-line execution
 if __name__ == "__main__":
     if len(sys.argv) < 2:
+        # start_time = 
         print(" Usage: python script.py <image_path>")
         sys.exit(1)
     
